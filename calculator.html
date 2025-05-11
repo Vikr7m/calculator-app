@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>Document</title>
+    <style>
+        body{
+            font-family: 'Outfit', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+        .calc{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 300px;
+            gap: 40px;
+            padding: 40px;
+            background-color: antiquewhite;
+            border-radius: 10px; 
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);   
+        }
+        .head{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100px;
+            background-color: blueviolet;
+            border-radius: 10px; 
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+        }
+        .bottom{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100px;
+            background-color: blueviolet;
+            border-radius: 10px; 
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+        }
+        .bottom h3{
+            font-size: 32px;
+            font-weight: bolder;
+            color: azure;
+        }
+        .head h3{
+            font-size: 32px;
+            font-weight: bolder;
+            color: azure;
+        }
+        .buttons{
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .firstrow{
+            display: flex;
+            gap: 20px;
+            justify-content: space-between;
+        }
+        .secondrow{
+            display: flex;
+            gap: 20px;
+            justify-content: space-between;
+        }
+        .col1{
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .col2{
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .col3{
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .col4{
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        #but{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 50px;
+            width: 50px;
+            border-radius: 20px;
+            color: black;
+            background-color: blueviolet;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="calc">
+        <h1>CALCULATOR</h1>
+        <div class="head" id="show">
+        </div>
+        <div class="buttons">
+            <div class="firstrow">
+                <div id="but" onclick="clearvalue()">C</div>
+                <div id="but" onclick="multiply()">X</div>
+                <div id="but" onclick="modulo()">%</div>
+                <div id="but" onclick="divide()">/</div>
+            </div>
+            <div class="secondrow">
+                <div class="col1">
+                    <div id="but" onclick="inputnum(7)">7</div>
+                    <div id="but" onclick="inputnum(4)">4</div>
+                    <div id="but" onclick="inputnum(1)">1</div>
+                </div>
+                <div class="col2">
+                    <div id="but" onclick="inputnum(8)">8</div>
+                    <div id="but" onclick="inputnum(5)">5</div>
+                    <div id="but" onclick="inputnum(2)">2</div>
+                </div>
+                <div class="col3">
+                    <div id="but" onclick="inputnum(9)">9</div>
+                    <div id="but" onclick="inputnum(6)">6</div>
+                    <div id="but" onclick="inputnum(3)">3</div>
+                </div>
+                <div class="col4">
+                    <div id="but" onclick="add()">+</div>
+                    <div id="but" onclick="sub()">-</div>
+                    <div id="but" onclick="equalto()">=</div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom" id ="result">
+            <h3>0</h3>
+        </div>
+    </div>
+    <script>
+        let num1 = 0;
+        let num2 = 0;
+        let res ="";
+        let output = 0;
+        let operandf = false;
+        let operand = "";
+        function updateDisplay(n) {
+            document.getElementById("show").innerHTML = `<h3>${n}</h3>`;
+        }
+        function displayresult(n) {
+            document.getElementById("result").innerHTML = `<h3>${output}</h3>`;
+        }
+        function clearvalue(){
+            num1 = 0;
+            num2 = 0;
+            output = 0;
+            res ="";
+            updateDisplay(res);
+            displayresult(output);
+            operandf = false;
+        }
+        function inputnum(n){
+            if (operandf){
+                num2 = num2*10 + n;
+                res = num2;
+                updateDisplay(res);
+            }
+            else{
+                num1 = num1*10 + n;
+                res = num1;
+                updateDisplay(res);
+            }
+        }
+        function add(){
+            if (operandf){
+                equalto();
+                num1 = output;
+                num2  = 0;
+                operand = "add";
+                res = "+";
+                updateDisplay(res);
+            }
+            else{
+                operandf = true;
+                operand = "add";
+                res = "+";
+                updateDisplay(res);
+            } 
+        }
+        function sub(){
+            if (operandf){
+                equalto();
+                num1 = output;
+                num2  = 0;
+                operand = "sub";
+                res = "-";
+                updateDisplay(res);
+            }
+            else{
+                operandf = true;
+                operand = "sub";
+                res = "-";
+                updateDisplay(res);
+            }
+        }
+        function multiply(){
+            if (operandf){
+                equalto();
+                num1 = output;
+                num2  = 0;
+                operand = "multiply";
+                res = "X";
+                updateDisplay(res);
+            }
+            else{
+                operandf = true;
+                operand = "multiply";
+                res = "X";
+                updateDisplay(res);
+            }
+        }
+        function divide(){
+            if (operandf){
+                equalto();
+                num1 = output;
+                num2  = 0;
+                operand = "divide";
+                res = "/";
+                updateDisplay(res);
+            }
+            else{
+                operandf = true;
+                operand = "divide";
+                res = "/";
+                updateDisplay(res);
+            }
+        }
+        function modulo(){
+            if (operandf){
+                equalto();
+                num1 = output;
+                num2  = 0;
+                operand = "modulus";
+                res = "%";
+                updateDisplay(res);
+            }
+            else{
+                operandf = true;
+                operand = "modulus";
+                res = "%";
+                updateDisplay(res);
+            }
+        }
+        function equalto(){
+            if(operand == "add"){
+                output = num1 + num2;
+                res = `${num1} + ${num2}`;
+                updateDisplay(res);
+                displayresult(output);
+            }
+            else if(operand == "sub"){
+                output = num1 - num2;
+                res = `${num1} - ${num2}`;
+                updateDisplay(res);
+                displayresult(output);
+            }
+            else if(operand == "multiply"){
+                output = num1 * num2;
+                res = `${num1} X ${num2}`;
+                updateDisplay(res);
+                displayresult(output);
+            }
+            else if(operand == "divide"){
+                output = num1 / num2;
+                res = `${num1} / ${num2}`;
+                updateDisplay(res);
+                displayresult(output);
+            }
+            else if(operand == "modulus"){
+                output = num1 % num2;
+                res = `${num1} % ${num2}`;
+                updateDisplay(res);
+                displayresult(output);
+            }
+            
+        }
+    </script>
+</body>
+</html>
